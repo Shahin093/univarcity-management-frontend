@@ -21,10 +21,11 @@ const Login = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      if (res?.data?.accessToken) {
+      console.log(res);
+      if (res?.accessToken) {
         router.push("/profile");
       }
-      storeUseInfo({ accessToken: res?.data?.accessToken });
+      storeUseInfo({ accessToken: res?.accessToken });
     } catch (error: any) {
       console.error(error);
     }
