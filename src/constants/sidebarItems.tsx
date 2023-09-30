@@ -19,7 +19,7 @@ export const sidebarItems = (role: string) => {
       icon: <ProfileOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/profile`}>Manage Students</Link>,
+          label: <Link href={`/${role}`}>Account Profile</Link>,
           key: `${role}/profile`,
         },
         {
@@ -133,17 +133,17 @@ export const sidebarItems = (role: string) => {
       icon: <TableOutlined />,
       key: `/${role}/user`,
     },
-    {
-      label: "Manage Permission",
-      key: "manage-permission",
-      icon: <AppstoreOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/permission`}>View permissions</Link>,
-          key: `/${role}/permission`,
-        },
-      ],
-    },
+    // {
+    //   label: "Manage Permission",
+    //   key: "manage-permission",
+    //   icon: <AppstoreOutlined />,
+    //   children: [
+    //     {
+    //       label: <Link href={`/${role}/permission`}>View permissions</Link>,
+    //       key: `/${role}/permission`,
+    //     },
+    //   ],
+    // },
     {
       label: "Management",
       key: "Management",
