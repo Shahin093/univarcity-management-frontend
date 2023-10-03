@@ -2,16 +2,30 @@
 import { DatePicker, DatePickerProps, Input } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
+import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
+
 interface UMDatePickerProps {
-  onChange?: (valueOne: Dayjs | null, valueTwo: string) => void;
+  onChange?: (valOne: Dayjs | null, valTwo: string) => void;
   name: string;
   value?: Dayjs;
   label?: string;
   size?: "large" | "small";
 }
 
-const FormDatePicker = ({ name, onChange, label, size }: UMDatePickerProps) => {
-  const { control, setValue } = useFormContext();
+const FormDatePicker = ({
+  name,
+  label,
+  onChange,
+  size = "large",
+}: UMDatePickerProps) => {
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
+
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
+
   const handleOnChange: DatePickerProps["onChange"] = (date, dateString) => {
     onChange ? onChange(date, dateString) : null;
     setValue(name, dateString);
@@ -26,15 +40,20 @@ const FormDatePicker = ({ name, onChange, label, size }: UMDatePickerProps) => {
         name={name}
         render={({ field }) => (
           <DatePicker
-            value={dayjs(field.value) || ""}
-            size={size}
-            onChange={handleOnChange}
-            style={{
-              width: "100%",
-            }}
-          />
+          defaultValue={dayjs(field.value) || ""}
+          size={size}
+          onChange={handleOnChange}
+          style={{ width: "100%" }}
+        />
         )}
       />
+      <small
+        style={{
+          color: "red",
+        }}
+      >
+        {errorMessage}
+      </small>
     </>
   );
 };

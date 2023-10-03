@@ -1,4 +1,5 @@
 "use client";
+import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
 import { Input } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
 interface ITextArea {
@@ -10,7 +11,12 @@ interface ITextArea {
 }
 
 const FormTextArea = ({ name, rows, value, placeholder, label }: ITextArea) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
 
   return (
     <>
@@ -28,6 +34,13 @@ const FormTextArea = ({ name, rows, value, placeholder, label }: ITextArea) => {
           />
         )}
       />
+      <small
+        style={{
+          color: "red",
+        }}
+      >
+        {errorMessage}
+      </small>
     </>
   );
 };

@@ -9,6 +9,7 @@ import {
 
 type FromConfig = {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 };
 
 type FormProps = {
@@ -16,12 +17,19 @@ type FormProps = {
   submitHandler: SubmitHandler<any>;
 } & FromConfig;
 
-const From = ({ children, submitHandler, defaultValues }: FormProps) => {
+const From = ({
+  children,
+  submitHandler,
+  defaultValues,
+  resolver,
+}: FormProps) => {
   const formConfig: FromConfig = {};
 
   if (!!defaultValues) formConfig["defaultValues"] = defaultValues;
+  if (!!resolver) formConfig["resolver"] = resolver;
 
   const methods = useForm<FromConfig>(formConfig);
+
   const { handleSubmit, reset } = methods;
 
   const onSubmit = (data: any) => {
