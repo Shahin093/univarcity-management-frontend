@@ -1,49 +1,47 @@
 "use client";
 import { Table } from "antd";
+import { boolean } from "yup";
 
-const UMTable = () => {
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-  ];
+type UMTableProps = {
+  loading?: boolean;
+  dataSource?: any;
+  pageSize?: number;
+  totalPages?: number;
+  showSizeChanger?: boolean;
+  onPaginationChange?: (page: number, pageSize: number) => void;
+  onChange?: (pagination: any, filter: any, sorter: any) => void;
+  columns?: any;
+  showPagination?: boolean;
+};
 
-  const tableData = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-    },
-  ];
-
-  const onPageSizeChange = (page: number, pageSize: number) => {
-    console.log("page: ", page, "pagesize: ", pageSize);
-  };
+const UMTable = ({
+  columns,
+  dataSource,
+  loading = false,
+  onChange,
+  onPaginationChange,
+  pageSize,
+  showSizeChanger = true,
+  totalPages,
+  showPagination = true,
+}: UMTableProps) => {
+  const paginationConfig = showPagination
+    ? {
+        pageSize: pageSize,
+        total: totalPages,
+        pageSizeOptions: [5, 10, 20],
+        showSizeChanger: showSizeChanger,
+        onChange: onPaginationChange,
+      }
+    : false;
 
   return (
     <Table
-      loading={false}
+      loading={loading}
       columns={columns}
-      dataSource={tableData}
-      pagination={{
-        pageSize: 5,
-        total: 100,
-        pageSizeOptions: [5, 10, 20],
-        showSizeChanger: true,
-        onChange: onPageSizeChange,
-      }}
+      dataSource={dataSource}
+      pagination={paginationConfig}
+      onChange={onChange}
     />
   );
 };
